@@ -7,13 +7,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 @Builder
+@Getter
 @Entity
-@Table(name = "neighborhoods")
-public class Neighborhood {
+@Table(name = "cities")
+public class City {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,8 +25,6 @@ public class Neighborhood {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "city_id")
-    private City city;
-
+    @OneToMany(mappedBy = "city")
+    private Set<Neighborhood> neighborhoods;
 }
