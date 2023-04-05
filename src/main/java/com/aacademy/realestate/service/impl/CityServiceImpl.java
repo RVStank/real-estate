@@ -25,7 +25,7 @@ public class CityServiceImpl implements CityService {
     @Override
     public City findById(Long id) {
         return cityRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(""));
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("No city with id %d does not exist" + id)));
     }
 
     @Override
@@ -36,17 +36,38 @@ public class CityServiceImpl implements CityService {
             Neighborhood foundNeighborhood = neighborhoodService.findById(neighborhood.getId());
         }
 
-        cityRepository.save(City.builder()
+        return cityRepository.save(City.builder()
                 .neighborhoods(neighborhoods)
                 .name(city.getName())
                 .build());
-
-        return null;
 
     }
 
     @Override
     public Set<City> findAll() {
         return null;
+    }
+
+    @Override
+    public City update(City city, Long id) {
+
+        City foundCity = findById(id);
+        City cityToUpdate = City.builder()
+                .id(foundCity.getId())
+                .name(city.getName())
+                .neighborhoods(city.getNeighborhoods())
+                .build();
+
+        return cityRepository.save(cityToUpdate);
+    }
+
+    @Override
+    public void detachCityNeighborhood(Long cityId, Set<Long> neighborhoodIds) {
+
+        City foundCity = findById(cityId);
+        foundCity.getNeighborhoods()
+                .removeIf(neighborhood -> neighborhoodIds.contains(neighborhood.getId()));
+
+        cityRepository.save(foundCity);
     }
 }
