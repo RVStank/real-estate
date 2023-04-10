@@ -1,7 +1,6 @@
 package com.aacademy.realestate.converter;
 
 import com.aacademy.realestate.dto.CityDTO;
-import com.aacademy.realestate.dto.NeighborhoodDTO;
 import com.aacademy.realestate.model.City;
 import com.aacademy.realestate.model.Neighborhood;
 import org.springframework.stereotype.Component;

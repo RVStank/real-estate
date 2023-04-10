@@ -32,7 +32,7 @@ public class CityServiceImpl implements CityService {
     public City save(City city) {
         Set<Neighborhood> neighborhoods = new HashSet<>();
 
-        for(Neighborhood neighborhood : city.getNeighborhoods()) {
+        for (Neighborhood neighborhood : city.getNeighborhoods()) {
             Neighborhood foundNeighborhood = neighborhoodService.findById(neighborhood.getId());
         }
 
